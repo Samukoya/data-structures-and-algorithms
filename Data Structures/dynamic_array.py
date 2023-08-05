@@ -4,6 +4,7 @@ class IllegalArgumentException(Exception):
     """Used for raising exceptions when the capacity of array is negative."""
     pass
 class DynamicArray(object):
+    """An implementation of a dynamic array in python."""
     def __init__(self):
         self._len = 0 # Apparent size of the array
         self._capacity = 1 # actual size of the array
@@ -114,14 +115,3 @@ class DynamicArray(object):
                     values += str(self._arr[i]) + ", "
             return "[" + values + "]"
         
-array = DynamicArray()
-array.append(1)
-array.append(2)
-print(array)
-print(array.contains(3))
-try:
-    array.set(2, 3)
-except IndexError:
-    array.append(3)
-print(array)
-print(array[2])
