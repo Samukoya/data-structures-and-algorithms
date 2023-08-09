@@ -1,14 +1,18 @@
 import ctypes
+import logging
+logging.basicConfig(level=logging.INFO)
 
 class IllegalArgumentException(Exception):
     """Used for raising exceptions when the capacity of array is negative."""
     pass
+
 class DynamicArray(object):
     """An implementation of a dynamic array in python."""
     def __init__(self):
         self._len = 0 # Apparent size of the array
         self._capacity = 1 # actual size of the array
         self._arr = self._make_array(self._capacity)
+        self._index = 0 # keeps track of the index for the iterator
 
     def _make_array(self, capacity):
         """Creates an array of size `capacity` """
@@ -65,13 +69,17 @@ class DynamicArray(object):
             raise IndexError("Index out of range")
         value = self._arr[index]
         new_array = self._make_array(self._len-1)
-
-        for i in range(self._len):
-            for j in range(self._len):
-                if i == index:
-                    j -= 1
-                else:
-                    new_array[j] = self._arr[i]
+        logging.info("index: %d"%(index))
+        i = j = 0
+        while (i<self._len and j<self._len):
+            if i == index:
+                j -= 1
+                
+            else:
+                logging.info("j: %d, i: %d"%(i, j))
+                new_array[j] = self._arr[i]
+            i += 1
+            j += 1
         self._arr = new_array
         self._len -= 1
         self._capacity = self._len
@@ -80,7 +88,7 @@ class DynamicArray(object):
     def remove(self, value):
         """Removes the first occurrence of an element from the array if it exists"""
         for i in range(self._len):
-            if self._array[i] == value:
+            if self._arr[i] == value:
                 self.removeAt(i)
                 return True
         return False
@@ -100,9 +108,27 @@ class DynamicArray(object):
         """Returns the element at the given index in the array"""
         return self.get(index)
     
+    def __setitem__(self, index, value):
+        """Sets the element at the given index in the array"""
+        return self.set(index, value)
+    
+    def __delitem__(self, value):
+        return self.removeAt(value)
+    
     def __len__(self):
         return self._len
     
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self._index < self._len:
+            value = self._arr[self._index]
+            self._index += 1
+            return value
+        else: 
+            raise StopIteration
+        
     def __str__(self) -> str:
         if self._len == 0:
             return "[ ]"
@@ -115,3 +141,10 @@ class DynamicArray(object):
                     values += str(self._arr[i]) + ", "
             return "[" + values + "]"
         
+
+array = DynamicArray()
+array.append(1)
+array.append(2)
+array.append(3)
+del array[2]
+print(array)
