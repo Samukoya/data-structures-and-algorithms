@@ -69,14 +69,12 @@ class DynamicArray(object):
             raise IndexError("Index out of range")
         value = self._arr[index]
         new_array = self._make_array(self._len-1)
-        logging.info("index: %d"%(index))
         i = j = 0
         while (i<self._len and j<self._len):
             if i == index:
                 j -= 1
                 
             else:
-                logging.info("j: %d, i: %d"%(i, j))
                 new_array[j] = self._arr[i]
             i += 1
             j += 1
@@ -112,8 +110,8 @@ class DynamicArray(object):
         """Sets the element at the given index in the array"""
         return self.set(index, value)
     
-    def __delitem__(self, value):
-        return self.removeAt(value)
+    def __delitem__(self, index):
+        return self.removeAt(index)
     
     def __len__(self):
         return self._len
@@ -142,9 +140,3 @@ class DynamicArray(object):
             return "[" + values + "]"
         
 
-array = DynamicArray()
-array.append(1)
-array.append(2)
-array.append(3)
-del array[2]
-print(array)
