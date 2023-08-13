@@ -131,13 +131,3 @@ class LinkedList:
             node = node.next
         return " <-> ".join(nodes)
 
-linked_list = LinkedList(["a", "b", "c", "d", "e", "f"])
-print(linked_list)
-linked_list.add_before("c", Node("z"))
-linked_list.append_left(Node("z"))
-linked_list.append_right(Node("g"))
-print(len(linked_list))   
-linked_list.remove_node("z")
-print(len(linked_list)) 
-linked_list.clear()
-print(len(linked_list))
