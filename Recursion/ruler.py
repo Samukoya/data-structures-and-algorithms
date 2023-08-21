@@ -20,3 +20,21 @@ def draw_ruler(num_inches, major_length):
         draw_line(major_length, str(j))  # draw inch j and label
 
 draw_ruler(4, 4)
+
+
+def draw_cm_ruler(num_cm, major_length):
+    def draw_small_ticks(tick):
+        if tick == 4:
+            return
+        else:
+            draw_line(1)
+            draw_small_ticks(tick+1)
+
+    for i in range(num_cm):
+        draw_line(major_length, str(i))
+        draw_small_ticks(0)
+        draw_line(major_length-1)
+        draw_small_ticks(0)
+    draw_line(major_length, str(num_cm))
+
+draw_cm_ruler(5, 3)
