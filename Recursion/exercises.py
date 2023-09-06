@@ -61,21 +61,24 @@ def towers_of_hanoi(n_disks: int)-> int:
     
     return solve(source, dest, aux, n_disks, steps)
 
-def is_palindrome(S, ind_1, ind_2):
+def is_palindrome(S, start, stop):
     """Checks whether a string is a palindrome"""
-    if ind_1 == ind_2:
-        # if the remaining letter is one
+    if start >= stop-1:
+        # if the remaining letter is one or less
         return True 
-    elif ind_1 - ind_2 == 1:
-        if S[ind_1] == S[ind_2]:
-            return True
-        else: 
-            return False
     else:
-        if S[ind_1] == S[ind_2]:
-            return is_palindrome(S, ind_1+1, ind_2-1)
-        else: 
+        if S[start] != S[stop-1]:  # Number is not a palindrome
             return False
+        return is_palindrome(S, start+1, stop-1)
 
 
-        
+def log2(n):
+    """This function finds the integer part of a the log to base 2 of a number using only integer division and addition"""
+    if n == 2:
+        return 1
+    elif n == 1:
+        return 0
+    else:
+        return 1 + log2(n//2)
+
+print(is_palindrome("gohangasalamiimalasagnahog", 0, len("gohangasalamiimalasagnahog")))
